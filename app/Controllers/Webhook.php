@@ -2,8 +2,11 @@
 
 namespace App\Controllers;
 
+use CodeIgniter\Controller;
 use LINE\LINEBot;
 use LINE\LINEBot\HTTPClient\CurlHTTPClient;
+
+use function PHPUnit\Framework\returnCallback;
 
 class Webhook extends BaseController
 {
@@ -32,9 +35,17 @@ class Webhook extends BaseController
             if ($event['type'] == 'message') {
                 if ($event['message']['type'] == 'text') {
                     $this->replyToken = $event['replyToken'];   // set replyToken
-                    redirect('Salam/kirimPesan');
+                    $this->salam();
                 }
             }
         }
+    }
+
+    public function salam()
+    {
+        $this->lineBot->replyText(
+            $this->replyToken,
+            "halo (nama) selamat datang di warung pecel lele maju roso \n kamu mau pesan apa hari ini ?"
+        );
     }
 }
