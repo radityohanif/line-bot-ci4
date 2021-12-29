@@ -45,11 +45,7 @@ class Webhook extends BaseController
                     $this->salamModel->setConfidence($pesanMasuk);
                     $this->terimaKasihModel->setConfidence($pesanMasuk);
 
-                    $this->lineBot->replyText(
-                        $this->replyToken,
-                        "Salam Confidence = " . $this->salamModel->confidence . "\n" .
-                            "Terima Kasih Confidence = " . $this->terimaKasihModel->confidence . "\n"
-                    );
+                    $this->salam();
                 }
             }
         }
