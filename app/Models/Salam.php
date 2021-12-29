@@ -8,7 +8,7 @@ class Salam extends Chatbot
 {
     public function __construct()
     {
-        $this->bot->replyText(
+        return $this->bot->replyText(
             $this->replyToken,
             "Hello :)"
         );
