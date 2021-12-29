@@ -2,9 +2,23 @@
 
 namespace App\Controllers;
 
+use LINE\LINEBot;
+use LINE\LINEBot\HTTPClient\CurlHTTPClient;
+
 class Webhook extends BaseController
 {
-    protected $chatbot;
+    protected $replyToken;
+    protected $bot;
+
+    public function __construct()
+    {
+        // Initial chatbot model
+        $channel_access_token = "ddHYmFx/7KWWmM4V58v/zHvicDqidb0Vp8kplVVq0uQjbUexytmu563i1WBhC4fNEB41b4NNIhrwwWtGLFykJMf5zrhO9wsKrZQUFNnjZtKiPp8OvKPh3RpQbcP09DqYR/nKuiSItxw1iBlk1b6GzQdB04t89/1O/w1cDnyilFU=";
+        $channel_secret = "f3dc9c53239aeab3dc0980c6b061cdac";
+        $httpClient = new CurlHTTPClient($channel_access_token);
+        $this->bot = new LINEBot($httpClient, ['channelSecret' => $channel_secret]);
+    }
+
     public function index()
     {
         // Get request body
@@ -17,10 +31,18 @@ class Webhook extends BaseController
         foreach ($this->request['events'] as $event) {
             if ($event['type'] == 'message') {
                 if ($event['message']['type'] == 'text') {
-                    $replyToken = $event['replyToken'];                 // Get replyToken
-                    return redirect()->to('Chatbot/' . $replyToken);    // initial chatbot
+                    $this->replyToken = $event['replyToken'];   // set replyToken
+                    $this->hello();
                 }
             }
         }
+    }
+
+    public function hello()
+    {
+        $this->bot->replyText(
+            $this->replyToken,
+            'Hello selamat datang mas..'
+        );
     }
 }
