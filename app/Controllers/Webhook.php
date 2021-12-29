@@ -71,9 +71,9 @@ class Webhook extends BaseController
             $this->replyToken,
             'Hello selamat datang di warung pecel lele seger roso :)'
         );
+        $this->response->setJSON((json_encode($result->getJSONDecodedBody())));
         $this->response->setContentType('application/json');
         $this->response->setStatusCode(200);
-        $this->response->setJSON($this->request->getBody()->write(json_encode($result->getJSONDecodedBody())));
         return $this->response;
     }
 }
