@@ -32,7 +32,7 @@ class Webhook extends BaseController
             if ($event['type'] == 'message') {
                 if ($event['message']['type'] == 'text') {
                     $this->replyToken = $event['replyToken'];   // set replyToken
-                    redirect()->to('Salam/kirimPesan');
+                    redirect('Salam/kirimPesan');
                 }
             }
         }
