@@ -16,7 +16,6 @@ class Webhook extends BaseController
     protected $channel_secret;
     protected $httpClient;
     protected $bot;
-
     protected $request;
     protected $replyToken;
 
@@ -68,9 +67,13 @@ class Webhook extends BaseController
 
     public function hello()
     {
-        $this->bot->replyText(
+        $result = $this->bot->replyText(
             $this->replyToken,
             'Hello selamat datang di warung pecel lele seger roso'
         );
+        $this->response->setContentType('application/json');
+        $this->response->setStatusCode(200);
+        $this->response->setJSON($this->request->getBody()->write(json_encode($result->getJSONDecodedBody())));
+        return $this->response;
     }
 }
