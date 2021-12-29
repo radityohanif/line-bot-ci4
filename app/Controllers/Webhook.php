@@ -34,23 +34,6 @@ class Webhook extends BaseController
     {
         // get request body and line signature header
         $body = $this->request->getBody();
-        $signature = $this->request->getHeaderLine("HTTP_X_LINE_SIGNATURE");
-
-        // log body and signature
-        file_put_contents('php://stderr', 'Body: ' . $body);
-
-        if (!$this->pass_signature) {
-
-            // if LINE_SIGNATURE exist in request header
-            if (empty($signature)) {
-                return "Signature does not exist, request fail";
-            }
-
-            // is this request comes from LINE?
-            if (!SignatureValidator::validateSignature($body, $this->channel_secret, $signature)) {
-                return "Signature is invalid, not from LINE";
-            }
-        }
 
         // Chatbot code start from here.. 👇👇
         // Fetch request data
@@ -67,13 +50,9 @@ class Webhook extends BaseController
 
     public function hello()
     {
-        $result = $this->bot->replyText(
+        $this->bot->replyText(
             $this->replyToken,
             'Hello selamat datang di warung pecel lele seger roso :)'
         );
-        // $this->response->setJSON((json_encode($result->getJSONDecodedBody())));
-        // $this->response->setContentType('application/json');
-        // $this->response->setStatusCode(200);
-        // return $this->response;
     }
 }
