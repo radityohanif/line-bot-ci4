@@ -1,0 +1,24 @@
+
+# SKENARIO DIALOG
+
+user    : permisi
+bot     : 
+    halo (nama) selamat datang di warung pecel lele maju roso
+    kamu mau pesan apa hari ini ?
+    
+    (gambar menu)
+
+user    : saya mau pesan pecel lele 2 bungkus
+bot     : 
+    oke siap
+    totalnya jadi Rp.20.000 ya 
+    
+    pesenan kamu sedang kami siapkan..
+
+    ada lagi tambahannya ?
+
+user    : gak ada 
+bot     : okedeh, ditunggu ya pesenannya akan segera kami antar kerumah kamu
+
+user    : makasih ya 
+bot     : iya sama2

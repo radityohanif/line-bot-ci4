@@ -8,15 +8,15 @@ use LINE\LINEBot\HTTPClient\CurlHTTPClient;
 class Webhook extends BaseController
 {
     protected $replyToken;
-    protected $bot;
+    protected $lineBot;
 
     public function __construct()
     {
-        // Initial chatbot model
+        // Initial chatlineBot model
         $channel_access_token = "ddHYmFx/7KWWmM4V58v/zHvicDqidb0Vp8kplVVq0uQjbUexytmu563i1WBhC4fNEB41b4NNIhrwwWtGLFykJMf5zrhO9wsKrZQUFNnjZtKiPp8OvKPh3RpQbcP09DqYR/nKuiSItxw1iBlk1b6GzQdB04t89/1O/w1cDnyilFU=";
         $channel_secret = "f3dc9c53239aeab3dc0980c6b061cdac";
         $httpClient = new CurlHTTPClient($channel_access_token);
-        $this->bot = new LINEBot($httpClient, ['channelSecret' => $channel_secret]);
+        $this->lineBot = new LINEBot($httpClient, ['channelSecret' => $channel_secret]);
     }
 
     public function index()
@@ -32,17 +32,9 @@ class Webhook extends BaseController
             if ($event['type'] == 'message') {
                 if ($event['message']['type'] == 'text') {
                     $this->replyToken = $event['replyToken'];   // set replyToken
-                    $this->hello();
+                    return redirect()->to('Salam/kirimPesan');
                 }
             }
         }
-    }
-
-    public function hello()
-    {
-        $this->bot->replyText(
-            $this->replyToken,
-            'Hello selamat datang mas..'
-        );
     }
 }
