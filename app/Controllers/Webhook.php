@@ -69,7 +69,7 @@ class Webhook extends BaseController
     {
         $result = $this->bot->replyText(
             $this->replyToken,
-            'Hello selamat datang di warung pecel lele seger roso'
+            'Hello selamat datang di warung pecel lele seger roso :)'
         );
         $this->response->setContentType('application/json');
         $this->response->setStatusCode(200);
