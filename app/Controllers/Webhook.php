@@ -42,8 +42,15 @@ class Webhook extends BaseController
 
     public function test()
     {
+        // susun pesan
         $jawaban = new MultiMessageBuilder();
         $jawaban->add(new TextMessageBuilder('Halo Selamat datang di warung pecel lele maju roso 😀'));
         $jawaban->add(new TextMessageBuilder('Kamu mau pesan apa..'));
+
+        // kirim pesan
+        $this->bot->replyMessage(
+            $this->replyToken,
+            $jawaban
+        );
     }
 }
