@@ -24,6 +24,6 @@ class Chatbot extends Model
         $this->bot = new LINEBot($this->httpClient, ['channelSecret' => $this->channel_secret]);
         $this->replyToken = $replyToken;
 
-        new Salam();
+        $salam = new Salam();
     }
 }
