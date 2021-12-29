@@ -2,8 +2,6 @@
 
 namespace App\Controllers;
 
-use App\Models\Chatbot;
-
 class Webhook extends BaseController
 {
     protected $chatbot;
@@ -19,8 +17,8 @@ class Webhook extends BaseController
         foreach ($this->request['events'] as $event) {
             if ($event['type'] == 'message') {
                 if ($event['message']['type'] == 'text') {
-                    $replyToken = $event['replyToken'];             // Get replyToken
-                    $this->chatbot = new Chatbot($replyToken);      // Initial chatbot model
+                    $replyToken = $event['replyToken'];                 // Get replyToken
+                    return redirect()->to('Chatbot/' . $replyToken);    // initial chatbot
                 }
             }
         }
