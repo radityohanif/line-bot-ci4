@@ -25,5 +25,6 @@ class Chatbot extends Model
         $this->replyToken = $replyToken;
 
         $salam = new Salam();
+        return $salam;
     }
 }
