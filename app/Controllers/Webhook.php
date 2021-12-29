@@ -32,27 +32,20 @@ class Webhook extends BaseController
 
     public function index()
     {
-        // get request body and line signature header
+        // get request body
         $body = $this->request->getBody();
 
-        // Chatbot code start from here.. 👇👇
-        // Fetch request data
+        // convert request data from json to array
         $this->request = json_decode($body, true);
+
+        // fetch data
         foreach ($this->request['events'] as $event) {
             if ($event['type'] == 'message') {
                 if ($event['message']['type'] == 'text') {
-                    $this->replyToken = $event['replyToken'];
-                    $this->hello();
+                    $this->replyToken = $event['replyToken'];   // get replyToken
+
                 }
             }
         }
-    }
-
-    public function hello()
-    {
-        $this->bot->replyText(
-            $this->replyToken,
-            'Hello selamat datang di warung pecel lele seger roso :)'
-        );
     }
 }
