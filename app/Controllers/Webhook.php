@@ -6,19 +6,24 @@ use LINE\LINEBot;
 use LINE\LINEBot\HTTPClient\CurlHTTPClient;
 use LINE\LINEBot\MessageBuilder\MultiMessageBuilder;
 use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
+use App\Model\Chatbot;
 
 class Webhook extends BaseController
 {
     protected $replyToken;
-    protected $bot;
+    protected $LINEBot;
+    protected $chatBotModel;
 
     public function __construct()
     {
-        // Initial chatbot model
+        // Initial LINEBot
         $channel_access_token = "ddHYmFx/7KWWmM4V58v/zHvicDqidb0Vp8kplVVq0uQjbUexytmu563i1WBhC4fNEB41b4NNIhrwwWtGLFykJMf5zrhO9wsKrZQUFNnjZtKiPp8OvKPh3RpQbcP09DqYR/nKuiSItxw1iBlk1b6GzQdB04t89/1O/w1cDnyilFU=";
         $channel_secret = "f3dc9c53239aeab3dc0980c6b061cdac";
         $httpClient = new CurlHTTPClient($channel_access_token);
-        $this->bot = new LINEBot($httpClient, ['channelSecret' => $channel_secret]);
+        $this->LINEBot = new LINEBot($httpClient, ['channelSecret' => $channel_secret]);
+
+        // Initial ChatbotModel
+        $this->chatBotModel = new Chatbot();
     }
 
     public function index()
@@ -33,24 +38,29 @@ class Webhook extends BaseController
         foreach ($this->request['events'] as $event) {
             if ($event['type'] == 'message') {
                 if ($event['message']['type'] == 'text') {
+                    // set replyToken
                     $this->replyToken = $event['replyToken'];
-                    $this->test();
+                    // send incoming message to chatbot model
+                    $this->chatBotModel->setIncomingMessage($event['message']['text']);
+                    // reply message
+                    $this->replyMessage();
                 }
             }
         }
     }
 
-    public function test()
+    public function replyMessage()
     {
-        // susun pesan
-        $jawaban = new MultiMessageBuilder();
-        $jawaban->add(new TextMessageBuilder('Halo Selamat datang di warung pecel lele maju roso 😀'));
-        $jawaban->add(new TextMessageBuilder('Kamu mau pesan apa..'));
+        // build reply message
+        $replyMessage = new MultiMessageBuilder();
+        $replyMessage->add(new TextMessageBuilder($this->chatBotModel->getReplyMessage()));
+        $replyMessage->add(new TextMessageBuilder('Mantap akhirnya berhasil👍'));
+        $replyMessage->add(new TextMessageBuilder('Alhamdulillah'));
 
-        // kirim pesan
-        $this->bot->replyMessage(
+        // send reply message
+        $this->LINEBot->replyMessage(
             $this->replyToken,
-            $jawaban
+            $replyMessage
         );
     }
 }
