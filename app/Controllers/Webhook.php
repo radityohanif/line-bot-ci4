@@ -52,13 +52,12 @@ class Webhook extends BaseController
     public function replyMessage()
     {
         // build reply message
-        $replyMessage = new MultiMessageBuilder();
-        $replyMessage->add($this->chatBotModel->getReplyMessage());
+        // $replyMessage = new MultiMessageBuilder();
 
         // send reply message
-        $this->LINEBot->replyMessage(
+        $this->LINEBot->replyText(
             $this->replyToken,
-            $replyMessage
+            $this->chatBotModel->getReplyMessage()
         );
     }
 }

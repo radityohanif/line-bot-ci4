@@ -2,13 +2,10 @@
 
 namespace App\Model;
 
-use CodeIgniter\Model;
-use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
-
-class Chatbot extends model
+class Chatbot
 {
     public function getReplyMessage()
     {
-        return new TextMessageBuilder('hello');
+        return 'aku';
     }
 }
