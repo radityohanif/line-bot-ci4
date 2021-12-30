@@ -53,7 +53,7 @@ class Webhook extends BaseController
     {
         // build reply message
         $replyMessage = new MultiMessageBuilder();
-        $replyMessage->add(new TextMessageBuilder($this->chatBotModel->getReplyMessage()));
+        // $replyMessage->add(new TextMessageBuilder($this->chatBotModel->getReplyMessage()));
         $replyMessage->add(new TextMessageBuilder('Mantap akhirnya berhasil👍'));
         $replyMessage->add(new TextMessageBuilder('Alhamdulillah'));
 
