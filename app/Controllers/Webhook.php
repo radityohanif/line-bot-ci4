@@ -6,13 +6,13 @@ use LINE\LINEBot;
 use LINE\LINEBot\HTTPClient\CurlHTTPClient;
 use LINE\LINEBot\MessageBuilder\MultiMessageBuilder;
 use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
-// use App\Model\Chatbot;
+use App\Model\Chatbot;
 
 class Webhook extends BaseController
 {
     protected $replyToken;
     protected $LINEBot;
-    // protected $chatBotModel;
+    protected $chatBotModel;
 
     public function __construct()
     {
@@ -23,7 +23,7 @@ class Webhook extends BaseController
         $this->LINEBot = new LINEBot($httpClient, ['channelSecret' => $channel_secret]);
 
         // Initial ChatbotModel
-        // $this->chatBotModel = new Chatbot();
+        $this->chatBotModel = new Chatbot();
     }
 
     public function index()
@@ -52,10 +52,7 @@ class Webhook extends BaseController
     public function replyMessage()
     {
         // build reply message
-        $replyMessage = new MultiMessageBuilder();
-        // $replyMessage->add(new TextMessageBuilder($this->chatBotModel->getReplyMessage()));
-        $replyMessage->add(new TextMessageBuilder('Mantap akhirnya berhasil👍'));
-        $replyMessage->add(new TextMessageBuilder('Alhamdulillah'));
+        $replyMessage = new TextMessageBuilder($this->chatBotModel->getReplyMessage());
 
         // send reply message
         $this->LINEBot->replyMessage(
