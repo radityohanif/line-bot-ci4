@@ -6,19 +6,14 @@ use LINE\LINEBot;
 use LINE\LINEBot\HTTPClient\CurlHTTPClient;
 use LINE\LINEBot\MessageBuilder\MultiMessageBuilder;
 use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
-use App\Model\Chatbot;
 
 class Webhook extends BaseController
 {
     protected $replyToken;
     protected $LINEBot;
-    protected $chatBotModel;
 
     public function __construct()
     {
-        // Initial ChatbotModel
-        $this->chatBotModel = new Chatbot();
-
         // Initial LINEBot
         $channel_access_token = "ddHYmFx/7KWWmM4V58v/zHvicDqidb0Vp8kplVVq0uQjbUexytmu563i1WBhC4fNEB41b4NNIhrwwWtGLFykJMf5zrhO9wsKrZQUFNnjZtKiPp8OvKPh3RpQbcP09DqYR/nKuiSItxw1iBlk1b6GzQdB04t89/1O/w1cDnyilFU=";
         $channel_secret = "f3dc9c53239aeab3dc0980c6b061cdac";
@@ -40,8 +35,6 @@ class Webhook extends BaseController
                 if ($event['message']['type'] == 'text') {
                     // set replyToken
                     $this->replyToken = $event['replyToken'];
-                    // send incoming message to chatbot model
-                    // $this->chatBotModel->setIncomingMessage($event['message']['text']);
                     // reply message
                     $this->replyMessage();
                 }
@@ -54,10 +47,11 @@ class Webhook extends BaseController
         // build reply message
         // $replyMessage = new MultiMessageBuilder();
 
+
         // send reply message
         $this->LINEBot->replyText(
             $this->replyToken,
-            $this->chatBotModel->getReplyMessage()
+            'bujang'
         );
     }
 }
