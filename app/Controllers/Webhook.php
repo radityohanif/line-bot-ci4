@@ -50,7 +50,7 @@ class Webhook extends BaseController
     public function replyMessage()
     {
         // build reply message
-        $replyMessage = new TextMessageBuilder($this->NLPModel->getReplyMessage());
+        $replyMessage = new TextMessageBuilder('tesss');
 
         // send reply message
         $this->LINEBot->replyMessage(
