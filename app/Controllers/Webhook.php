@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Model\NLP;
 use LINE\LINEBot;
 use LINE\LINEBot\HTTPClient\CurlHTTPClient;
 use LINE\LINEBot\MessageBuilder\MultiMessageBuilder;
@@ -11,6 +12,7 @@ class Webhook extends BaseController
 {
     protected $replyToken;
     protected $LINEBot;
+    public $NLPModel;
 
     public function __construct()
     {
@@ -19,6 +21,9 @@ class Webhook extends BaseController
         $channel_secret = "f3dc9c53239aeab3dc0980c6b061cdac";
         $httpClient = new CurlHTTPClient($channel_access_token);
         $this->LINEBot = new LINEBot($httpClient, ['channelSecret' => $channel_secret]);
+
+        // Initial NLP Model
+        $this->NLPModel = new NLP();
     }
 
     public function index()
@@ -45,13 +50,12 @@ class Webhook extends BaseController
     public function replyMessage()
     {
         // build reply message
-        // $replyMessage = new MultiMessageBuilder();
-
+        $replyMessage = new TextMessageBuilder($this->NLPModel->getReplyMessage());
 
         // send reply message
-        $this->LINEBot->replyText(
+        $this->LINEBot->replyMessage(
             $this->replyToken,
-            'bujang'
+            $replyMessage
         );
     }
 }
