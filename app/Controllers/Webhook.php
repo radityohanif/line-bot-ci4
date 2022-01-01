@@ -12,6 +12,7 @@ class Webhook extends BaseController
 {
     protected $replyToken;
     protected $bot;
+    protected $userId;
 
     public function __construct()
     {
@@ -37,6 +38,7 @@ class Webhook extends BaseController
             if ($event['type'] == 'message') {
                 if ($event['message']['type'] == 'text') {
                     $this->replyToken = $event['replyToken'];
+                    $this->userId = $event['source']['userId'];
                     $this->hello();
                 }
             }
@@ -45,9 +47,15 @@ class Webhook extends BaseController
 
     public function hello()
     {
-        $this->bot->replyText(
-            $this->replyToken,
-            "Hola from webhook controller"
-        );
+        // try to get profile user from id
+        $request = $this->bot->getProfile($this->userId);
+        if ($request->isSucceeded()) {
+            // set profile 
+            $profile = $request->getJSONDecodedBody();
+            // build message
+            $message = new TextMessageBuilder('Halo ' . $profile['displayName'] . ' ada yang bisa aku bantu');
+            // send message
+            $this->bot->replyMessage($this->replyToken, $message);
+        }
     }
 }
