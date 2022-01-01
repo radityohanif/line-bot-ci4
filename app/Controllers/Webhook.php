@@ -11,7 +11,6 @@ class Webhook extends BaseController
 {
     protected $replyToken;
     protected $LINEBot;
-    public $NLPModel;
 
     public function __construct()
     {
@@ -45,13 +44,6 @@ class Webhook extends BaseController
 
     public function replyMessage()
     {
-        // build reply message
-        $replyMessage = new TextMessageBuilder('tesss');
-
-        // send reply message
-        $this->LINEBot->replyMessage(
-            $this->replyToken,
-            $replyMessage
-        );
+        $this->LINEBot->replyText($this->replyToken, "Hello 🙂");
     }
 }
