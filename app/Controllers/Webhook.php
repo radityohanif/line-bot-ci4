@@ -43,13 +43,15 @@ class Webhook extends BaseController
                         $this->greetingCallBack();
                     } else if (is_thanks($event['message']['text'])) {
                         $this->thanksCallBack();
+                    } else {
+                        $this->bot->replyText($this->replyToken, 'Maaf aku gak ngerti 😢');
                     }
                 }
             }
         }
     }
 
-    function greetingCallBack()
+    public function greetingCallBack()
     {
         // try to get profile user from id
         $request = $this->bot->getProfile($this->userId);
@@ -63,7 +65,7 @@ class Webhook extends BaseController
         }
     }
 
-    function thanksCallBack()
+    public function thanksCallBack()
     {
         $message = new TextMessageBuilder('Sama-sama 😄');
         $this->bot->replyMessage(
