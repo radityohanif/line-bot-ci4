@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use LINE\LINEBot;
 use LINE\LINEBot\HTTPClient\CurlHTTPClient;
+use App\Model\Greeting;
 use LINE\LINEBot\MessageBuilder\MultiMessageBuilder;
 use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
 use LINE\LINEBot\MessageBuilder\StickerMessageBuilder;
@@ -12,6 +13,7 @@ class Webhook extends BaseController
 {
     protected $replyToken;
     protected $bot;
+    protected $model;
 
     public function __construct()
     {
@@ -20,6 +22,9 @@ class Webhook extends BaseController
         $channel_secret = "07c25222ac6b0b0499f07127aac90e30";
         $httpClient = new CurlHTTPClient($channel_access_token);
         $this->bot = new LINEBot($httpClient, ['channelSecret' => $channel_secret]);
+
+        // initialize external model
+        $this->model = new Greeting();
     }
 
     public function index()
@@ -45,9 +50,10 @@ class Webhook extends BaseController
 
     public function hello()
     {
+        $replyMessage = $this->model->getReplyMessage();
         $this->bot->replyText(
             $this->replyToken,
-            'Hola 🙃'
+            $replyMessage
         );
     }
 }
