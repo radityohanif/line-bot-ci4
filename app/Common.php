@@ -14,7 +14,28 @@
  * @see: https://codeigniter4.github.io/CodeIgniter4/
  */
 
-function tes()
+function is_greeting($message)
 {
-    return true;
+    $words = ['halo', 'selamat', 'hai', 'hei', 'p'];
+    $message = $message->explode(' ');
+    foreach ($words as $word) {
+        if (in_array($word, $message)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+
+function is_thanks($message)
+{
+    $words = ['terimakasih', 'terima', 'kasih', 'tq', 'thank'];
+    $message = $message->explode(' ');
+    foreach ($words as $word) {
+        if (in_array($word, $message)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
