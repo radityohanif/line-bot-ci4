@@ -39,6 +39,9 @@ class Webhook extends BaseController
                 if ($event['message']['type'] == 'text') {
                     $this->replyToken = $event['replyToken'];
                     $this->userId = $event['source']['userId'];
+                    if (tes()) {
+                        $this->bot->replyText($this->replyToken, 'Tess');
+                    }
                     $this->hello();
                 }
             }
