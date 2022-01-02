@@ -39,15 +39,12 @@ class Webhook extends BaseController
                 if ($event['message']['type'] == 'text') {
                     $this->replyToken = $event['replyToken'];
                     $this->userId = $event['source']['userId'];
-                    if (is_greeting($event['message']['text'])) {
+                    if (is_greeting($event['message']['text']))
                         $this->greetingCallBack();
-                    } else if (is_thanks($event['message']['text'])) {
+                    else if (is_thanks($event['message']['text']))
                         $this->thanksCallBack();
-                    } else if ($event['message']['text'] == 'translate') {
-                        $this->translate();
-                    } else {
+                    else
                         $this->bot->replyText($this->replyToken, 'Maaf aku gak ngerti 😢');
-                    }
                 }
             }
         }
