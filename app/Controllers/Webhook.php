@@ -90,7 +90,7 @@ class Webhook extends BaseController
             CURLOPT_TIMEOUT => 30,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "POST",
-            CURLOPT_POSTFIELDS => "q=Hello%2C%20world!&target=id&source=en",
+            CURLOPT_POSTFIELDS => "q=My Cat&target=id&source=en",
             CURLOPT_HTTPHEADER => [
                 "accept-encoding: application/gzip",
                 "content-type: application/x-www-form-urlencoded",
@@ -100,12 +100,12 @@ class Webhook extends BaseController
         ]);
 
         $response = curl_exec($curl);
-        $err = curl_error($curl);
+        $error = curl_error($curl);
 
         curl_close($curl);
 
-        if (!$err) {
-            // fetch response
+        if (!$error) {
+            // fetch translated text from response
             $response = json_decode($response, true);
             $translatedText = $response['data']['translations'][0]['translatedText'];
             // build & send message
