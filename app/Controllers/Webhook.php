@@ -32,7 +32,6 @@ class Webhook extends BaseController
         file_put_contents('php://stderr', 'Body: ' . $body);
 
         // Chatbot code start from here.. 👇👇
-        // Fetch request data
         $this->request = json_decode($body, true);
         foreach ($this->request['events'] as $event) {
             if ($event['type'] == 'message') {
@@ -45,6 +44,8 @@ class Webhook extends BaseController
                         $this->thanks();
                     else if (is_funFact($event['message']['text']))
                         $this->funFact();
+                    else if (is_quote($event['message']['text']))
+                        $this->quote();
                     else
                         $this->bot->replyText($this->replyToken, 'Maaf aku gak ngerti 😢');
                 }
@@ -140,6 +141,49 @@ class Webhook extends BaseController
             $funFact = $response['data']['fact'];
             // build & send message
             $this->bot->replyText($this->replyToken, $this->translate($funFact));
+        }
+    }
+
+    public function quote()
+    {
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, [
+            CURLOPT_URL => "https://quotel-quotes.p.rapidapi.com/quotes/random",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => "{}",
+            CURLOPT_HTTPHEADER => [
+                "content-type: application/json",
+                "x-rapidapi-host: quotel-quotes.p.rapidapi.com",
+                "x-rapidapi-key: 6f0f67132fmshb13e46582fcb3ddp113e88jsn1066c39c8f21"
+            ],
+        ]);
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if (!$err) {
+            // fetch quote from response
+            $response = json_decode($response, true);
+            $quote = $response['quote'];
+            // build message
+            $replyMessage = new MultiMessageBuilder();
+            $replyMessage->add(new TextMessageBuilder($quote));
+            $replyMessage->add(new TextMessageBuilder('Semoga kamu termotivasi 😉'));
+            // send message
+            $this->bot->replyMessage(
+                $this->replyToken,
+                $replyMessage
+            );
         }
     }
 }

@@ -49,3 +49,15 @@ function is_funFact($message)
         }
     }
 }
+
+function is_quote($message)
+{
+    $words = ['kuotes', 'quote', 'quotes', 'motivasi'];
+    $message = strtolower($message);
+    $message = explode(' ', $message);
+    foreach ($words as $word) {
+        if (in_array($word, $message)) {
+            return true;
+        }
+    }
+}
