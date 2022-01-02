@@ -17,6 +17,7 @@
 function is_greeting($message)
 {
     $words = ['halo', 'selamat', 'hai', 'hei', 'p'];
+    $message = strtolower($message);
     $message = explode(' ', $message);
     foreach ($words as $word) {
         if (in_array($word, $message)) {
@@ -28,6 +29,7 @@ function is_greeting($message)
 function is_thanks($message)
 {
     $words = ['terimakasih', 'terima', 'kasih', 'tq', 'thank'];
+    $message = strtolower($message);
     $message = explode(' ', $message);
     foreach ($words as $word) {
         if (in_array($word, $message)) {
