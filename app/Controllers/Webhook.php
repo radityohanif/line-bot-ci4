@@ -44,7 +44,7 @@ class Webhook extends BaseController
                     else if (is_thanks($event['message']['text']))
                         $this->thanksCallBack();
                     else if ($event['message']['text'] == 'translate')
-                        $this->translate();
+                        $this->translate("Hello my name is hanif");
                     else
                         $this->bot->replyText($this->replyToken, 'Maaf aku gak ngerti 😢');
                 }
@@ -78,7 +78,7 @@ class Webhook extends BaseController
         );
     }
 
-    public function translate()
+    public function translate($text)
     {
 
         $curl = curl_init();
@@ -92,7 +92,7 @@ class Webhook extends BaseController
             CURLOPT_TIMEOUT => 30,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "POST",
-            CURLOPT_POSTFIELDS => "q=My Cat&target=id&source=en",
+            CURLOPT_POSTFIELDS => "q=" . $text . "&target=id&source=en",
             CURLOPT_HTTPHEADER => [
                 "accept-encoding: application/gzip",
                 "content-type: application/x-www-form-urlencoded",
