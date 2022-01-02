@@ -43,6 +43,8 @@ class Webhook extends BaseController
                         $this->greetingCallBack();
                     else if (is_thanks($event['message']['text']))
                         $this->thanksCallBack();
+                    else if ($event['message']['text'] == 'translate')
+                        $this->translate();
                     else
                         $this->bot->replyText($this->replyToken, 'Maaf aku gak ngerti 😢');
                 }
