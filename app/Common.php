@@ -1,5 +1,7 @@
 <?php
 
+use App\Model\Greeting;
+
 /**
  * The goal of this file is to allow developers a location
  * where they can overwrite core procedural functions and
@@ -16,14 +18,17 @@
 
 function is_greeting($message)
 {
-    $words = ['halo', 'selamat', 'hai', 'hei', 'p'];
-    $message = strtolower($message);
-    $message = explode(' ', $message);
-    foreach ($words as $word) {
-        if (in_array($word, $message)) {
-            return true;
-        }
-    }
+    // $words = ['halo', 'selamat', 'hai', 'hei', 'p'];
+    // $message = strtolower($message);
+    // $message = explode(' ', $message);
+    // foreach ($words as $word) {
+    //     if (in_array($word, $message)) {
+    //         return true;
+    //     }
+    // }
+
+    $greetingModel = new Greeting();
+    return $greetingModel->getReplyMessage();
 }
 
 function is_thanks($message)
