@@ -37,3 +37,15 @@ function is_thanks($message)
         }
     }
 }
+
+function is_funFact($message)
+{
+    $words = ['lelucon', 'ngelawak', 'fakta', 'unik'];
+    $message = strtolower($message);
+    $message = explode(' ', $message);
+    foreach ($words as $word) {
+        if (in_array($word, $message)) {
+            return true;
+        }
+    }
+}

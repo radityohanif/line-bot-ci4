@@ -40,11 +40,11 @@ class Webhook extends BaseController
                     $this->replyToken = $event['replyToken'];
                     $this->userId = $event['source']['userId'];
                     if (is_greeting($event['message']['text']))
-                        $this->greetingCallBack();
+                        $this->greeting();
                     else if (is_thanks($event['message']['text']))
-                        $this->thanksCallBack();
-                    else if ($event['message']['text'] == 'translate')
-                        $this->translate("Hello my name is hanif");
+                        $this->thanks();
+                    else if (is_funFact($event['message']['text']))
+                        $this->funFact();
                     else
                         $this->bot->replyText($this->replyToken, 'Maaf aku gak ngerti 😢');
                 }
@@ -52,7 +52,7 @@ class Webhook extends BaseController
         }
     }
 
-    public function greetingCallBack()
+    public function greeting()
     {
         // try to get profile user from id
         $request = $this->bot->getProfile($this->userId);
@@ -69,7 +69,7 @@ class Webhook extends BaseController
         }
     }
 
-    public function thanksCallBack()
+    public function thanks()
     {
         $message = new TextMessageBuilder('Sama-sama 😄');
         $this->bot->replyMessage(
@@ -112,6 +112,35 @@ class Webhook extends BaseController
             $translatedText = $response['data']['translations'][0]['translatedText'];
             // build & send message
             $this->bot->replyText($this->replyToken, $translatedText);
+        }
+    }
+
+    public function funFact()
+    {
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://asli-fun-fact-api.herokuapp.com/',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+        ));
+
+        $response = curl_exec($curl);
+        $error = curl_error($curl);
+
+        curl_close($curl);
+
+        if (!$error) {
+            // fetch fun fact from response
+            $response = json_decode($response, true);
+            $funFact = $response['data']['fact'];
+            // build & send message
+            $this->bot->replyText($this->replyToken, $funFact);
         }
     }
 }
