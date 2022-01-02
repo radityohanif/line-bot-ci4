@@ -110,8 +110,7 @@ class Webhook extends BaseController
             // fetch translated text from response
             $response = json_decode($response, true);
             $translatedText = $response['data']['translations'][0]['translatedText'];
-            // build & send message
-            $this->bot->replyText($this->replyToken, $translatedText);
+            return $translatedText;
         }
     }
 
@@ -140,7 +139,7 @@ class Webhook extends BaseController
             $response = json_decode($response, true);
             $funFact = $response['data']['fact'];
             // build & send message
-            $this->bot->replyText($this->replyToken, $funFact);
+            $this->bot->replyText($this->replyToken, $this->translate($funFact));
         }
     }
 }
