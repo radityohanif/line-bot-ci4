@@ -56,10 +56,13 @@ class Webhook extends BaseController
         // try to get profile user from id
         $request = $this->bot->getProfile($this->userId);
         if ($request->isSucceeded()) {
-            // set profile 
+            // get profile 
             $profile = $request->getJSONDecodedBody();
+            // get first name
+            $fullName   = explode(' ', $profile['displayName']);
+            $firstName  = $fullName[0];
             // build message
-            $message = new TextMessageBuilder('Halo ' . $profile['displayName'] . ' ada yang bisa aku bantu');
+            $message = new TextMessageBuilder('Halo ' . $firstName . ' ada yang bisa aku bantu');
             // send message
             $this->bot->replyMessage($this->replyToken, $message);
         }
