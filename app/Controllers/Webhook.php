@@ -177,7 +177,7 @@ class Webhook extends BaseController
             $quote = $response['quote'];
             // build message
             $replyMessage = new MultiMessageBuilder();
-            $replyMessage->add(new TextMessageBuilder($quote));
+            $replyMessage->add(new TextMessageBuilder($this->translate($quote)));
             $replyMessage->add(new TextMessageBuilder('Semoga kamu termotivasi 😉'));
             // send message
             $this->bot->replyMessage(
