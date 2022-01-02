@@ -1,20 +1,9 @@
 {
-    "destination": "U77b0bd1e9798217f707b6fff32cc8fd9",
-    "events": [
-        {
-            "type": "message",
-            "message": {
-                "type": "text",
-                "id": "15327905872804",
-                "text": "ini pesan masuk"
-            },
-            "timestamp": 1640756750182,
-            "source": {
-                "type": "user",
-                "userId": "U72233859aaab6cab0cb848b280410d74"
-            },
-            "replyToken": "63bdcd1e40584e9f8592646fdaff46e0",
-            "mode": "active"
-        }
-    ]
+    "data": {
+        "translations": [
+            {
+                "translatedText": "Halo Dunia!"
+            }
+        ]
+    }
 }

@@ -108,7 +108,11 @@ class Webhook extends BaseController
         curl_close($curl);
 
         if (!$err) {
-            $this->bot->replyText($this->replyToken, "Sukses");
+            // fetch response
+            $response = json_decode($response, true);
+            $translatedText = $response['data']['translations']['translatedText'];
+            // build & send message
+            $this->bot->replyText($this->replyToken, $translatedText);
         }
     }
 }
