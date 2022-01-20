@@ -58,6 +58,17 @@ class Webhook extends BaseController
         echo 'tess';
     }
 
+    public function kirimPesan()
+    {
+        // User ID Line Hanif = U72233859aaab6cab0cb848b280410d74
+        // tau dari response di server
+        // cara munculinnya pake perintah => heroku logs --tail
+        $userId = 'U72233859aaab6cab0cb848b280410d74';
+        $textMessageBuilder = new TextMessageBuilder('Halo bro, ini pesan push');
+        $this->bot->pushMessage($userId, $textMessageBuilder);
+        echo 'tadi abis kirim pesan ke user id' . $userId;
+    }
+
     public function greeting()
     {
         // try to get profile user from id
