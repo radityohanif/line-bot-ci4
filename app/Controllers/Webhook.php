@@ -53,6 +53,11 @@ class Webhook extends BaseController
         }
     }
 
+    public function tes()
+    {
+        echo 'tess';
+    }
+
     public function greeting()
     {
         // try to get profile user from id

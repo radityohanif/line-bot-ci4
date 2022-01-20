@@ -40,7 +40,7 @@ function is_thanks($message)
 
 function is_funFact($message)
 {
-    $words = ['lelucon', 'ngelawak', 'fakta', 'unik'];
+    $words = ['fakta', 'unik'];
     $message = strtolower($message);
     $message = explode(' ', $message);
     foreach ($words as $word) {
